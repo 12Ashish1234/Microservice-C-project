@@ -20,11 +20,12 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v3
 
-#SonarCloud Scanner
-    - name: Install sonar-scanner and build-wrapper
-      uses: SonarSource/sonarcloud-github-c-cpp@v1
-
-#Running Build wrapper for C
-    - name: Run build-wrapper
-      run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} gcc -o myapp create_json.cpp
+    - name: Docker build and push
+      uses: azure/docker-login@v1
+      with:
+          login-server: testcppapp.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+          docker build . -t testcppapp.azurecr.io/test-myapp:${{ github.sha }}
+          docker push testcppapp.azurecr.io/test-myapp:${{ github.sha }}
