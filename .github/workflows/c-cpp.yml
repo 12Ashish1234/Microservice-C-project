@@ -25,7 +25,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-           docker buildx list
+           docker buildx ls
 #           docker buildx build --platform linux/arm64/v8 . -t vehicleacrscn.azurecr.io/obdsignalgen:${{ github.run_number }}
 #           docker push vehicleacrscn.azurecr.io/obdsignalgen:${{ github.run_number }}
 #           docker build . -t vehicleacrscn.azurecr.io/obdsignalgen:${{ github.sha }}
