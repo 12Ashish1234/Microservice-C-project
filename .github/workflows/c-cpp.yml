@@ -3,8 +3,6 @@ name: C/C++ CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -23,9 +21,9 @@ jobs:
     - name: Docker build and push
       uses: azure/docker-login@v1
       with:
-          login-server: vehilcle.azurecr.io
+          login-server: vehicleacrscn.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-          docker build . -t vehilcle.azurecr.io/vehicle-app:${{ github.sha }}
-          docker push vehilcle.azurecr.io/vehicle-app:${{ github.sha }}
+          docker build . -t vehicleacrscn.azurecr.io/obdsignalgen:${{ github.sha }}
+          docker push vehicleacrscn.azurecr.io/obdsignalgen:${{ github.sha }}
