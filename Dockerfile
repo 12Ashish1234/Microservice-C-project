@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:16.04
+FROM arm64v8/ubuntu:latest
 RUN apt-get update && apt-get install -y curl g++
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
