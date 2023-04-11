@@ -40,4 +40,6 @@ jobs:
           sudo cmake ..
           sudo make
           ls
-          sudo cp /usr/src/gtest/lib/libgtest* /usr/lib
+          cd lib
+          ls
+          sudo cp /usr/src/gtest/lib/libgtest.a /usr/lib
