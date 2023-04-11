@@ -35,6 +35,6 @@ jobs:
           pwd
           cmake --version
           lsb_release -a
-          mkdir build
+          sudo mkdir build
           cd build
-          cmake ..
+          sudo cmake ..
