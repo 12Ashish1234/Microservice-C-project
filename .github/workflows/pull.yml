@@ -44,7 +44,7 @@ jobs:
           pwd
           ls -l
           sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
-          cd ../../../../..
+          cd ../../../../../home
           pwd
           ls -l
           g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
