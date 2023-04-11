@@ -32,3 +32,4 @@ jobs:
           sudo apt install libgtest-dev googletest
           sudo apt install cmake
           cd /usr/src/gtest
+          pwd
