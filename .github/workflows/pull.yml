@@ -39,4 +39,4 @@ jobs:
           cd build
           sudo cmake ..
           sudo make
-          sudo cp ./build/lib/libgtest* /usr/lib
+          ls /usr/lib
