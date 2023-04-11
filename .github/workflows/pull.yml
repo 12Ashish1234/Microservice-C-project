@@ -32,8 +32,8 @@ jobs:
           sudo apt install libgtest-dev googletest
           cd /usr/src/gtest
           sudo -Bbuild
-          sudo cmake --build build
-          sudo cp ./build/lib/libgtest* /usr/lib
+          cmake --build build
+          cp ./build/lib/libgtest* /usr/lib
           g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
           ./a.out
 
