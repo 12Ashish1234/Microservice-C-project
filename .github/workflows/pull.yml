@@ -38,3 +38,4 @@ jobs:
           sudo mkdir build
           cd build
           sudo cmake ..
+          sudo cmake --build build
