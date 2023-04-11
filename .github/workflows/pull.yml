@@ -33,3 +33,4 @@ jobs:
           sudo apt install cmake
           cd /usr/src/gtest
           pwd
+          cmake -Bbuild
