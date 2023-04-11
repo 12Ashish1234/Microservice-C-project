@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04.6
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
