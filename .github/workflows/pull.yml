@@ -35,7 +35,6 @@ jobs:
           pwd
           cmake --version
           lsb_release -a
-          cmake -Bbuild
           mkdir build
           cd build
           cmake ..
