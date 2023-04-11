@@ -42,4 +42,4 @@ jobs:
           ls
           cd lib
           ls
-          sudo cp /usr/src/gtest/lib/libgtest.a /usr/lib
+          sudo cp -r /usr/src/gtest/lib/libgtest* /usr/lib
