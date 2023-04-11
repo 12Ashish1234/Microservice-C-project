@@ -39,8 +39,8 @@ jobs:
           cd build
           sudo cmake ..
           sudo make
-          ll
+          ls -l
           cd lib
           pwd
-          ll
+          ls -l
           sudo cp -r /usr/src/gtest/lib/lib* /usr/lib
