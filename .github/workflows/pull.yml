@@ -34,3 +34,4 @@ jobs:
           cd /usr/src/gtest
           pwd
           cmake --version
+          lsb_release -a
