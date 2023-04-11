@@ -31,7 +31,7 @@ jobs:
       run: |
           sudo apt install libgtest-dev googletest
           sudo apt install cmake
-          cd /usr/src/gtest/
+          cd /usr/src/gtest
           pwd
           cmake --version
           lsb_release -a
@@ -39,4 +39,5 @@ jobs:
           cd build
           sudo cmake ..
           sudo make
-          sudo cp /usr/gtest/libgtest* /usr/lib
+          ls
+          sudo cp /usr/src/gtest/libgtest* /usr/lib
