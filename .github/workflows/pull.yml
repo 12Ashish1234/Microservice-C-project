@@ -39,7 +39,8 @@ jobs:
           cd build
           sudo cmake ..
           sudo make
-          ls
+          ll
           cd lib
-          ls
-          sudo cp -r /usr/src/gtest/lib/libgtest* /usr/lib
+          pwd
+          ll
+          sudo cp -r /usr/src/gtest/lib/lib* /usr/lib
