@@ -10,7 +10,7 @@ using json = nlohmann::json;
 
 static int MIL = 0;
 static int IGN_TYPE = 0;
-static int FUEL_STATUS = 0;
+static int FUEL_STATUS = 1;
 
 
 string rand_MIL() 
