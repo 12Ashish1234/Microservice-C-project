@@ -48,5 +48,5 @@ jobs:
           pwd
           ls -l
           g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-          ls-l
+          ls -l
           ./a.out
