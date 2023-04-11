@@ -30,6 +30,7 @@ jobs:
     - name: Google Test framework
       run: |
           sudo apt install libgtest-dev googletest
+          sudo apt install cmake
           cd /usr/src/gtest
           -Bbuild
           cmake --build build
