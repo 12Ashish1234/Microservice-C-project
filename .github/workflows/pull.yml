@@ -27,7 +27,7 @@ jobs:
 #           sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
 
 # Run Google tests
-    - name: Google Test framework
+    - name: Google Test framework for Unit testing
       run: |
           sudo apt install libgtest-dev googletest
           sudo apt install cmake
