@@ -1,7 +1,7 @@
 name: arm64 image build and push
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 jobs:
@@ -9,18 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
-    steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
+    # steps:
+    # - name: Checkout the code
+    #   uses: actions/checkout@v3
 
-    - name: Docker build and push
-      uses: azure/docker-login@v1
-      with:
-          login-server: vehicleregistry.azurecr.io
-          username: ${{ secrets.REGISTRY_USERNAME_TEST }}
-          password: ${{ secrets.REGISTRY_PASSWORD_TEST }}
-    - run: |
-          docker buildx create --use --name multi-arch-builder
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx ls
-          docker buildx build --platform linux/arm64 --push -t vehicleregistry.azurecr.io/arm64-patch:${{ github.run_number }} .
+    # - name: Docker build and push
+    #   uses: azure/docker-login@v1
+    #   with:
+    #       login-server: vehicleregistry.azurecr.io
+    #       username: ${{ secrets.REGISTRY_USERNAME_TEST }}
+    #       password: ${{ secrets.REGISTRY_PASSWORD_TEST }}
+    # - run: |
+    #       docker buildx create --use --name multi-arch-builder
+    #       docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    #       docker buildx ls
+    #       docker buildx build --platform linux/arm64 --push -t vehicleregistry.azurecr.io/arm64-patch:${{ github.run_number }} .

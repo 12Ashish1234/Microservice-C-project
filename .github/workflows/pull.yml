@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
-    # steps:
-    # - name: Checkout the code
-    #   uses: actions/checkout@v3
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
 #SonarCloud Scanner
 #     - name: Install sonar-scanner and build-wrapper
 #       uses: SonarSource/sonarcloud-github-c-cpp@v1
@@ -28,18 +28,18 @@ jobs:
 #           sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
 
 # Run Google tests
-    # - name: Google Test framework for Unit testing
-    #   run: |
-    #       sudo apt install libgtest-dev googletest
-    #       sudo apt install cmake
-    #       cd /usr/src/gtest
-    #       cmake --version
-    #       lsb_release -a
-    #       sudo mkdir build
-    #       cd build
-    #       sudo cmake ..
-    #       sudo make
-    #       sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
-    #       cd ${{ github.workspace }}
-    #       g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-    #       ./a.out
+    - name: Google Test framework for Unit testing
+      run: |
+          sudo apt install libgtest-dev googletest
+          sudo apt install cmake
+          cd /usr/src/gtest
+          cmake --version
+          lsb_release -a
+          sudo mkdir build
+          cd build
+          sudo cmake ..
+          sudo make
+          sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
+          cd ${{ github.workspace }}
+          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
+          ./a.out
