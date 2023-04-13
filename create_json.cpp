@@ -85,7 +85,7 @@ void create_json()
     string jsonString = json(t.dump()).dump();
     //cout<<jsonString;
 
-    snprintf(buffer, sizeof(buffer), "curl -X GET -H \"Content-type: application/json\" -H \"Accept: application/json\" -d %s http://192.168.29.234:3000", jsonString.c_str());
+    snprintf(buffer, sizeof(buffer), "curl -X GET -H \"Content-type: application/json\" -H \"Accept: application/json\" -d %s http://20.119.122.221:3000", jsonString.c_str());
     //cout<<buffer;
 
     system(buffer);
