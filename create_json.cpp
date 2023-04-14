@@ -85,7 +85,7 @@ void create_json()
     string jsonString = json(t.dump()).dump();
     //cout<<jsonString;
 
-    snprintf(buffer, sizeof(buffer), "curl -X GET -H \"Content-type: application/json\" -H \"Accept: application/json\" -d %s http://20.219.91.197:3000", jsonString.c_str());
+    snprintf(buffer, sizeof(buffer), "curl -X GET -H \"Content-type: application/json\" -H \"Accept: application/json\" -d %s http://20.81.75.92:3000", jsonString.c_str());
     //cout<<buffer;
 
     system(buffer);
@@ -96,7 +96,7 @@ void create_json()
 void task1()
 {
     int i = 0;
-    for(i=0;i<100;i++)
+    for(i=0;i<5;i++)
     {
         // std::cout << "MIL : " << rand_MIL()<<endl;
         // std::cout << "DistanceWithMIL : " << DistanceWithMIL()<<endl;
