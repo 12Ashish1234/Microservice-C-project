@@ -17,7 +17,7 @@ jobs:
     - name: Docker build and push
       uses: azure/docker-login@v1
       with:
-          login-server: vehilcle.azurecr.io
+          login-server: vehicleregistry.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
