@@ -48,6 +48,6 @@ jobs:
           cd ${{ github.workspace }}
           pwd
           ls -l
-          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
+          g++ test.cpp -o test -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
           ls -l
-          ./a.out
+          ./test
