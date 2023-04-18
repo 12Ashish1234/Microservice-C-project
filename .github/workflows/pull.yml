@@ -41,5 +41,10 @@ jobs:
           sudo make
           sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
           cd ${{ github.workspace }}
-          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-          ./a.out
+          pwd
+          ls -l
+          g++ test.cpp -o test -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
+          ls -l
+          ./test
+          pwd
+          ls -l
