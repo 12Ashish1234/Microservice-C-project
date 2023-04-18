@@ -95,7 +95,8 @@ void create_json()
 
 void task1()
 {
-    while(true)
+    int i = 0;
+    for(i=0;i<5;i++)
     {
         // std::cout << "MIL : " << rand_MIL()<<endl;
         // std::cout << "DistanceWithMIL : " << DistanceWithMIL()<<endl;
