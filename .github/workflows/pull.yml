@@ -47,5 +47,4 @@ jobs:
           ls -l
           ./test
           pwd
-          cd /usr/gtest/src
           ls -l
