@@ -1,0 +1,43 @@
+name: Release Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.4.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.9.0
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6.13.0
+        with:
+          push: true
+          # Use a unique tag (for example, the commit SHA). You can choose another strategy.
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/release_c-app/test-c-app:${{ github.sha }}
+
+      - name: Create GitHub release with Docker image version
+        id: create_release
+        uses: ncipollo/release-action@v1.15.0
+        with:
+          tag: ${{ github.sha }}
+          name: "Release ${{ github.sha }}"
+          body: |
+            Docker image [${{ secrets.DOCKERHUB_USERNAME }}/test-c-app:${{ github.sha }}](https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/test-c-app/tags)
+            has been built and pushed.
