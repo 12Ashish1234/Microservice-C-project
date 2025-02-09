@@ -13,19 +13,19 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v3
 #SonarCloud Scanner
-#     - name: Install sonar-scanner and build-wrapper
-#       uses: SonarSource/sonarcloud-github-c-cpp@v1
-# #Running Build wrapper for C
-#     - name: Run build-wrapper
-#       run: |
-#           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
-# # Run Sonar Scanner
-#     - name: Run sonar-scanner
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#       run: |
-#           sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+#    - name: Install sonar-scanner and build-wrapper
+#      uses: SonarSource/sonarcloud-github-c-cpp@v1
+#Running Build wrapper for C
+#    - name: Run build-wrapper
+#      run: |
+#         build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
+# Run Sonar Scanner
+#    - name: Run sonar-scanner
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      run: |
+#          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
 
 # Run Google tests
     - name: Google Test framework for Unit testing
@@ -33,21 +33,18 @@ jobs:
           sudo apt install libgtest-dev googletest
           sudo apt install cmake
           cd /usr/src/gtest
-          pwd
           cmake --version
           lsb_release -a
           sudo mkdir build
           cd build
           sudo cmake ..
           sudo make
-          ls -l
-          cd lib
-          pwd
-          ls -l
           sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
           cd ${{ github.workspace }}
           pwd
           ls -l
-          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
+          g++ test.cpp -o test -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
           ls -l
-          ./a.out
+          ./test
+          pwd
+          ls -l
