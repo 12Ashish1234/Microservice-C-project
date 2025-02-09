@@ -31,21 +31,19 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [Build_Scan]
     steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
-# Run Google tests
-    - name: Google Test framework for Unit testing
-      run: |
-          sudo apt install libgtest-dev googletest
-          sudo apt install cmake
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake g++ libgtest-dev
+      - name: Build Google Test
+        run: |
           cd /usr/src/gtest
-          cmake --version
-          lsb_release -a
-          sudo mkdir build
-          cd build
-          sudo cmake ..
+          sudo cmake CMakeLists.txt
           sudo make
-          sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
-          cd ${{ github.workspace }}
-          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-          ./a.out
+          sudo cp lib/*.a /usr/lib
+
+      - name: Compile the program
+        run: g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+
+      - name: Run tests
+        run: ./test_graph
