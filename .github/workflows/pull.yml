@@ -15,10 +15,22 @@ jobs:
       #SonarCloud Scanner
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake g++ libgtest-dev
+      - name: Build Google Test
+        run: |
+          cd /usr/src/gtest
+          sudo cmake CMakeLists.txt
+          sudo make
+          sudo cp lib/*.a /usr/lib
+        
+      
       #Running Build wrapper for C
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -I/usr/include -L/usr/lib -lgtest -lgtest_main -pthread
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
