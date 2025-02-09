@@ -3,5 +3,5 @@ FROM ubuntu:24.04
 RUN apt-get update && apt-get install -y curl g++
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
-RUN g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
+RUN g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
 CMD ["./create_json"]

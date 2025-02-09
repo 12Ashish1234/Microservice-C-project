@@ -18,7 +18,7 @@ jobs:
       #Running Build wrapper for C
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
