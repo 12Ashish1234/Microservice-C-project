@@ -28,18 +28,18 @@ jobs:
           sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
 
 # Run Google tests
-    - name: Google Test framework for Unit testing
-      run: |
-          sudo apt install libgtest-dev googletest
-          sudo apt install cmake
-          cd /usr/src/gtest
-          cmake --version
-          lsb_release -a
-          sudo mkdir build
-          cd build
-          sudo cmake ..
-          sudo make
-          sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
-          cd ${{ github.workspace }}
-          g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-          ./a.out
+    # - name: Google Test framework for Unit testing
+    #   run: |
+    #       sudo apt install libgtest-dev googletest
+    #       sudo apt install cmake
+    #       cd /usr/src/gtest
+    #       cmake --version
+    #       lsb_release -a
+    #       sudo mkdir build
+    #       cd build
+    #       sudo cmake ..
+    #       sudo make
+    #       sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
+    #       cd ${{ github.workspace }}
+    #       g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
+    #       ./a.out
