@@ -39,5 +39,5 @@ jobs:
           tag: ${{ github.sha }}
           name: "Release ${{ github.sha }}"
           body: |
-            Docker image [${{ secrets.DOCKERHUB_USERNAME }}/test-c-app:${{ github.sha }}](https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/test-c-app/tags)
+            Docker image [${{ secrets.DOCKERHUB_USERNAME }}/release_c-app:${{ github.sha }}](https://hub.docker.com/r/${{ secrets.DOCKERHUB_USERNAME }}/release_c-app/tags)
             has been built and pushed.
