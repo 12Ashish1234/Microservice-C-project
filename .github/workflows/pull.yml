@@ -44,6 +44,7 @@ jobs:
 
       - name: Compile the program
         run: |
+          cd ..
           pwd
           # g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
           ls -la
