@@ -43,7 +43,9 @@ jobs:
           sudo cp lib/*.a /usr/lib
 
       - name: Compile the program
-        run: g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+        run: |
+          ls
+          g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
 
       - name: Run tests
         run: ./test_graph
