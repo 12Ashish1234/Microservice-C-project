@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: test-c-app:${{ github.run_number }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/test-c-app:${{ github.run_number }}
 
 #     - name: Docker build and push
 #       uses: azure/docker-login@v1
