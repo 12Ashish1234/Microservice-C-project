@@ -5,41 +5,49 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  Build_Scan:
+    runs-on: ubuntu-22.04
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
-#SonarCloud Scanner
-    - name: Install sonar-scanner and build-wrapper
-      uses: SonarSource/sonarcloud-github-c-cpp@v1
-#Running Build wrapper for C
-    - name: Run build-wrapper
-      run: |
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      #SonarCloud Scanner
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+      #Running Build wrapper for C
+      - name: Run build-wrapper
+        run: |
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
-# Run Sonar Scanner
-    - name: Run sonar-scanner
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
 
-# Run Google tests
-    # - name: Google Test framework for Unit testing
-    #   run: |
-    #       sudo apt install libgtest-dev googletest
-    #       sudo apt install cmake
-    #       cd /usr/src/gtest
-    #       cmake --version
-    #       lsb_release -a
-    #       sudo mkdir build
-    #       cd build
-    #       sudo cmake ..
-    #       sudo make
-    #       sudo cp -r /usr/src/gtest/build/lib/libgtest* /usr/lib
-    #       cd ${{ github.workspace }}
-    #       g++ test.cpp -I. -L/usr/lib/ -lgtest -lgtest_main -lpthread
-    #       ./a.out
+  Tests:
+    runs-on: ubuntu-22.04
+    needs: [Build_Scan]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake g++ libgtest-dev
+      - name: Build Google Test
+        run: |
+          cd /usr/src/gtest
+          sudo cmake CMakeLists.txt
+          sudo make
+          sudo cp lib/*.a /usr/lib
+
+      - name: Compile the program
+        run: |
+          ls -la
+          g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+
+      - name: Run tests
+        run: ./test_graph

@@ -1,4 +1,5 @@
-FROM ubuntu:latest
+# Testing
+FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y curl g++
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
