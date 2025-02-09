@@ -79,19 +79,32 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
+      #SonarCloud Scanner
       - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@v3.2.0
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake g++ libgtest-dev
+      - name: Build Google Test
+        run: |
+          cd /usr/src/gtest
+          sudo cmake CMakeLists.txt
+          sudo make
+          sudo cp lib/*.a /usr/lib
+        
+      
+      #Running Build wrapper for C
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -I/usr/include -L/usr/lib -lgtest -lgtest_main -pthread
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.2.1
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
             --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
-
   Tests:
     runs-on: ubuntu-22.04
     needs: [Build_Scan]
@@ -110,6 +123,7 @@ jobs:
           sudo cp lib/*.a /usr/lib
       - name: Compile the program
         run: |
+          ls -la
           g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
       - name: Run tests
         run: ./test_graph
