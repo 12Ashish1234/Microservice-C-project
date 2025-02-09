@@ -46,6 +46,7 @@ jobs:
         run: |
           pwd
           # g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
+          ls -la
 
       - name: Run tests
         run: ./test_graph
