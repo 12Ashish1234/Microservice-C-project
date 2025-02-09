@@ -30,7 +30,7 @@ jobs:
         with:
           push: true
           # Use a unique tag (for example, the commit SHA)
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/release_c-app/test-c-app:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/release_c-app:${{ github.sha }}
 
       - name: Create GitHub release with Docker image version
         id: create_release
