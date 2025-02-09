@@ -1,4 +1,5 @@
-name: Scans
+name: CI Pipeline
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -15,10 +16,22 @@ jobs:
       #SonarCloud Scanner
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake g++ libgtest-dev
+      - name: Build Google Test
+        run: |
+          cd /usr/src/gtest
+          sudo cmake CMakeLists.txt
+          sudo make
+          sudo cp lib/*.a /usr/lib
+        
+      
       #Running Build wrapper for C
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -g -I. -std=c++11 -pthread create_json.cpp -o create_json
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -o test_graph graph.cpp -I/usr/include -L/usr/lib -lgtest -lgtest_main -pthread
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
@@ -26,7 +39,6 @@ jobs:
         with:
           args: >
             --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
-
   Tests:
     runs-on: ubuntu-22.04
     needs: [Build_Scan]
@@ -43,11 +55,36 @@ jobs:
           sudo cmake CMakeLists.txt
           sudo make
           sudo cp lib/*.a /usr/lib
-
       - name: Compile the program
         run: |
           ls -la
           g++ -o test_graph graph.cpp -lgtest -lgtest_main -pthread
-
       - name: Run tests
         run: ./test_graph
+
+  Build_Docker:
+    runs-on: ubuntu-latest
+    needs: [Tests]  # Ensures Docker build happens only after tests pass
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.4.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.9.0
+
+      - name: Build and push
+        uses: docker/build-push-action@v6.13.0
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/test-c-app:${{ github.run_number }}
