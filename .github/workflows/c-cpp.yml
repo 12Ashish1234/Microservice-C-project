@@ -6,10 +6,9 @@ name: C/C++ CI
 #       - 'Dockerfile'
 on:
   workflow_run:
-    workflows: ["Scans"]
+    workflows: [Run Tests]
     types:
       - completed
-
   push:
     branches: [ "main" ]
   workflow_dispatch:
