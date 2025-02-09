@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v6.13.0
         with:
           push: true
-          # Use a unique tag (for example, the commit SHA). You can choose another strategy.
+          # Use a unique tag (for example, the commit SHA)
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/release_c-app/test-c-app:${{ github.sha }}
 
       - name: Create GitHub release with Docker image version
