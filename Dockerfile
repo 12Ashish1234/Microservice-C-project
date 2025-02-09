@@ -15,6 +15,7 @@ RUN cd /usr/src/gtest && \
     cp lib/libgtest*.a /usr/lib/
 
 # Copy your application source code into the container
+# for testing
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 
