@@ -1,5 +1,9 @@
 name: CI Pipeline
 
+permissions:
+  actions: read
+  contents: read
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -26,8 +30,7 @@ jobs:
           sudo cmake CMakeLists.txt
           sudo make
           sudo cp lib/*.a /usr/lib
-        
-      
+
       #Running Build wrapper for C
       - name: Run build-wrapper
         run: |
@@ -64,7 +67,7 @@ jobs:
 
   Build_Docker:
     runs-on: ubuntu-latest
-    needs: [Tests]  # Ensures Docker build happens only after tests pass
+    needs: [Tests] # Ensures Docker build happens only after tests pass
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
