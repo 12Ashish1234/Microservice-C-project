@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   build:
     runs-on: self-hosted
@@ -16,5 +20,5 @@ jobs:
         run: docker rm -f cicd-pipeline-container || true
       - name: Run docker container
         run: |
-            echo ${{ github.run_number }}
-            docker run -d --name cicd-pipeline-container ashish21bd/test-c-app:${{ github.run_number }}
+          echo ${{ github.run_number }}
+          docker run -d --name cicd-pipeline-container ashish21bd/test-c-app:${{ github.run_number }}
