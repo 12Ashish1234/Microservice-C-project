@@ -1,0 +1,24 @@
+name: CD_Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI_Pipeline"]
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Pull docker image
+        run: docker pull ashish21bd/test-c-app:${{ github.run_number }}
+      - name: Delete Old docker container
+        run: docker rm -f cicd-pipeline-container || true
+      - name: Run docker container
+        run: |
+          echo ${{ github.run_number }}
+          docker run -d --name cicd-pipeline-container ashish21bd/test-c-app:${{ github.run_number }}
